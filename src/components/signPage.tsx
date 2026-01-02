@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import "../styles/signup.css";
 import type { FormData } from "./types";
 import uni_logo from "../images/LOGO_UNI.jpg";
+import axios from "axios";
 
 const SignPage: React.FC = () => {
   const [captcha, setCaptcha] = useState<string>("");
@@ -19,6 +20,14 @@ const SignPage: React.FC = () => {
 
   useEffect(() => {
     generateCaptcha();
+    axios
+      .get("http://localhost:3000/api/github")
+      .then((response) => {
+        console.log("GitHub Data:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching GitHub data:", error);
+      });
   }, []);
 
   const handleCaptchaChange = (e: ChangeEvent<HTMLInputElement>): void => {
